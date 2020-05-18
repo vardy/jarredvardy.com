@@ -1,0 +1,14 @@
+<script>
+    let source = new EventSource('/update-stream');
+
+    let eventList = document.getElementById("events");
+
+    source.addEventListener('message', function(event) {
+        console.log(event);
+        let item = document.createElement("li");
+        let text = document.createElement("span");
+        text.innerHTML = `${event.lastEventId}: ${event.data}: <%- some_data %>`
+        item.appendChild(text);
+        eventList.appendChild(item);
+    }, false);
+</script>

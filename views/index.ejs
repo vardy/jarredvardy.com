@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("main_head") %>
+  <%- include("main_style") %>
+</head>
+
+<body>
+  <h1>Index!</h1>
+  <h2>Events</h2>
+  <ul id="events"></ul>
+
+  <h2>Authors</h2>
+  <%- include("test/test", {name: name}) %>
+
+  <%- include("listeners/event_listener", {some_data: "DataDataData!"}) %>
+</body>
+
+</html>
