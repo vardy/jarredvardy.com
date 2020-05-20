@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     req.socket.setTimeout(2147483647); // Max possible delay
   
     var messageCount = 0;
-    var subscriber = redis.createClient();
+    var subscriber = redis.createClient({host: process.env.REDIS_HOST});
   
     subscriber.subscribe("updates");
   

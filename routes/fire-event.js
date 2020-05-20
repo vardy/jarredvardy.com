@@ -1,6 +1,6 @@
 const redis = require('redis');
 
-const publisherClient = redis.createClient();
+const publisherClient = redis.createClient({host: process.env.REDIS_HOST});
 
 /**
  * Handling "/fire-event/:event_name"
