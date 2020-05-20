@@ -1,0 +1,44 @@
+<script>
+    var scrollEventHandler = function() {
+        if(scrollY >= 105) {
+            if(!document.getElementById("heading-nav-scrolled")) {
+                var head = document.getElementById("heading-nav");
+                var clone = head.cloneNode(true);
+                clone.id = "heading-nav-scrolled";
+                clone.classList.add("slideDown");
+                clone.classList.add("bottom-shadow");
+                document.body.insertBefore(clone, head);
+            }
+        } else {
+            document.getElementById("heading-nav-scrolled").remove();
+        }
+    }
+
+    window.addEventListener("scroll", scrollEventHandler);
+    /*let sticky = {
+        sticky_after: 200,
+        init: function() {
+            this.header = document.getElementById("heading-nav");
+            this.clone = this.header.cloneNode(true);
+            let newHead = document.getElementById("page-container").insertBefore(this.clone, this.header);
+            newHead.classList.add("scrolled");
+            this.scroll();
+            this.events();
+        },
+
+        scroll: function() {
+            if(window.scrollY > this.sticky_after) {
+                document.body.classList.add("scrolled");
+            }
+            else {
+                document.getElementById("heading-nav").classList.remove("scrolled");
+            }
+        },
+
+        events: function() {
+            window.addEventListener("scroll", this.scroll.bind(this));
+        }
+    };
+
+    document.addEventListener("DOMContentLoaded", sticky.init.bind(sticky));*/
+</script>

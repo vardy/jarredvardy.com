@@ -1,66 +1,72 @@
 const express = require("express");
 const app = express();
-const redis = require('redis');
 
-const publisherClient = redis.createClient();
+const marked = require("marked");
+
+const rimraf = require("rimraf");
+const fs = require("fs");
+const path = require("path");
+
+
+// Post parser (syncronous)
+// Transpiles posts in /posts/ from markdown to HTML.
+// HTML posts are placed in /public/posts/. THIS IS A DESTRUCTIVE PROCESS for /public/posts/!!
+function parsePosts() {
+    let mdPostsPath = __dirname + "/posts"
+    if (!fs.existsSync(mdPostsPath)){
+        fs.mkdirSync(mdPostsPath);
+    }
+
+    let htmlPostsPath = __dirname + "/public/posts"
+    if (fs.existsSync(htmlPostsPath)){
+        rimraf.sync(htmlPostsPath);
+        fs.mkdirSync(htmlPostsPath);
+    } else {
+        fs.mkdirSync(htmlPostsPath);
+    }
+
+    try {
+        const files = fs.readdirSync(mdPostsPath);
+
+        for(const file of files) {
+
+            const mdFilePath = path.join(mdPostsPath, file);
+
+            const fileNameSansExt = path.parse(file).name;
+            const newFileName = fileNameSansExt + ".html";
+            const desination = path.join(htmlPostsPath, newFileName);
+
+            const mdFileContents = fs.readFileSync(mdFilePath, 'utf8');
+            const htmlContent = marked(mdFileContents);
+            fs.writeFileSync(desination, htmlContent);
+
+            console.log("Transpiled post '%s'->'%s'", mdFilePath, desination);
+        }
+    }
+    catch(ex) {
+        console.error("Something went wrong during parsing of markdown posts: ", ex);
+    }
+}
+
+parsePosts();
 
 // Middleware
+app.set("port", 3000);
 app.set("view engine", "ejs");
 
 // Static routes for assets
 app.use("/assets", express.static("./public"));
 
 // Dynamic (logical) routes
+app.use("/update-stream", require("./routes/test_message_stream"));
+app.use("/fire-event/:event_name", require("./routes/fire-event"));
 
-app.get('/update-stream', function(req, res) {
-    // let request last as long as possible
-    req.socket.setTimeout(99999999999999999999);
-  
-    var messageCount = 0;
-    var subscriber = redis.createClient();
-  
-    subscriber.subscribe("updates");
-  
-    // In case we encounter an error...print it out to the console
-    subscriber.on("error", function(err) {
-      console.log("Redis Error: " + err);
+app.use("/", require("./routes/index"));
+
+app.listen(app.get("port"), () => {
+    console.log(`App listening on port ${app.get("port")}...`);
+    process.send && process.send({ 
+        event: 'online', 
+        url: 'http://localhost:3000/' 
     });
-  
-    // When we receive a message from the redis connection
-    subscriber.on("message", function(channel, message) {
-      messageCount++; // Increment our message count
-  
-      res.write('id: ' + messageCount + '\n');
-      res.write("data: " + message + '\n\n'); // Note the extra newline
-    });
-  
-    //send headers for event-stream connection
-    res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
-    });
-    res.write('\n');
-  
-    // The 'close' event is fired when a user closes their browser window.
-    // In that situation we want to make sure our redis channel subscription
-    // is properly shut down to prevent memory leaks...and incorrect subscriber
-    // counts to the channel.
-    req.on("close", function() {
-      subscriber.unsubscribe();
-      subscriber.quit();
-    });
-  });
-  
-app.get('/fire-event/:event_name', function(req, res) {
-    publisherClient.publish( 'updates', ('"' + req.params.event_name + '" page visited') );
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write('All clients have received "' + req.params.event_name + '"');
-    res.end();
 });
-
-const routeIndex = require("./routes/index");
-app.use("/", routeIndex);
-
-const port = 3000
-app.listen(port, () => console.log(`App listening on port ${port}...`))
