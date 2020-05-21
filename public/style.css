@@ -237,9 +237,39 @@ Desktop-width views
         box-shadow: 14px 10px 34px -12px rgba(0,0,0,0.75);
     }
 
+    #footer-stripe-4 {
+        height: 64px;
+        z-index: 999;
+        position: relative;
+        background-color: #009790;
+    }
+
+    #footer-stripe-3 {
+        height: 55px;
+        z-index: 998;
+        position: relative;
+        background-color: #FF805C;
+    }
+
+    #footer-stripe-2 {
+        height: 35px;
+        z-index: 997;
+        position: relative;
+        background-color: #78C29E;
+    }
+
+    #footer-stripe-1 {
+        height: 100px;
+        z-index: 996;
+        position: relative;
+        background-color: #BDF6E9;
+    }
+    
+
     #stripe-1 {
         height: 45px;
         width: 500px;
+        z-index: 999;
         transform: rotate(135deg);
         position: fixed;
         bottom: 0;
@@ -249,6 +279,7 @@ Desktop-width views
     #stripe-2 {
         height: 40px;
         width: 500px;
+        z-index: 998;
         transform: rotate(135deg);
         position: fixed;
         bottom: 30px;
@@ -258,6 +289,7 @@ Desktop-width views
     #stripe-3 {
         height: 30px;
         width: 500px;
+        z-index: 997;
         transform: rotate(135deg);
         position: fixed;
         bottom: 40px;
@@ -267,6 +299,7 @@ Desktop-width views
     #stripe-4 {
         height: 45px;
         width: 500px;
+        z-index: 996;
         transform: rotate(135deg);
         position: fixed;
         bottom: 60px;
