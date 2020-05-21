@@ -40,7 +40,7 @@ p {
 
 .section {
     width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .aligner {
@@ -166,6 +166,7 @@ Desktop-width views
         height: 400px;
         width: 700px;
         padding: 15px 0 15px 0;
+        margin-bottom: 100px;
         display: flex;
         flex-direction: row;
         justify-content: center;

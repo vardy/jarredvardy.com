@@ -5,7 +5,7 @@ const config = require("../config");
  */
 module.exports = (req, res) => {
     res.render('index.njk', {
-        title: "",
+        titleOverride: "",
         browserRefreshURL: config.BROWSER_REFRESH_URL
     });
 }

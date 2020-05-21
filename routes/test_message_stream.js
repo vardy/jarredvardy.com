@@ -16,12 +16,12 @@ module.exports = (req, res) => {
       console.log("Redis Error: " + err);
     });
   
-    // New message on Redis pub/sub
+    // New message on Redis pub
     subscriber.on("message", function(channel, message) {
-      messageCount++; // Increment our message count
+      messageCount++;
   
       res.write('id: ' + messageCount + '\n');
-      res.write("data: " + message + '\n\n'); // Note the extra newline
+      res.write("data: " + message + '\n\n');
     });
   
     //send headers for event-stream connection
@@ -32,10 +32,6 @@ module.exports = (req, res) => {
     });
     res.write('\n');
   
-    // The 'close' event is fired when a user closes their browser window.
-    // In that situation we want to make sure our redis channel subscription
-    // is properly shut down to prevent memory leaks...and incorrect subscriber
-    // counts to the channel.
     req.on("close", function() {
       subscriber.unsubscribe();
       subscriber.quit();

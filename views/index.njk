@@ -20,9 +20,11 @@
 <div class="container">
     <div id="jumbotron" class="section">
         <div id="jumbotron-message" class="jumbotron-item">
-        <h1>Please hire me</h1>
+        <h1>Looking for work</h1>
         <p>
-            I'm not desperate I swear... Morbi lacinia tincidunt tristique. Donec eu neque sapien. Sed non urna felis. Curabitur eleifend mi suscipit, scelerisque massa vitae, semper tortor. Sed sed lectus quis arcu ultrices vestibulum non vitae justo.
+            I work full-stack, however my favourite place to be is in the backend.
+            I prioritise cleanliness, security, speed, and aesthetics to create 
+            readible, extensible, well-documented code.
         </p>
         <a href="https://github.com/vardy/">
             <img id="shield-github" alt="GitHub Link" src="https://img.shields.io/github/followers/vardy?label=Github&logo=github&logoColor=white&style=flat-square">
@@ -92,24 +94,6 @@
         let item = document.createElement("li");
         let text = document.createElement("span");
         text.innerHTML = `${event.lastEventId}: ${event.data}`
-        item.appendChild(text);
-        eventList.appendChild(item);
-    }, false);
-</script>
-
-<!--
-    Blogposts script
--->
-<script>
-    let source = new EventSource('/update-stream');
-
-    let eventList = document.getElementById("events");
-
-    source.addEventListener('message', function(event) {
-        console.log(event);
-        let item = document.createElement("li");
-        let text = document.createElement("span");
-        text.innerHTML = `${event.lastEventId}: ${event.data}: <%- some_data %>`
         item.appendChild(text);
         eventList.appendChild(item);
     }, false);

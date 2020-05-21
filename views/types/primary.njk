@@ -15,7 +15,11 @@
         <link rel="stylesheet" href="/assets/style.css">
         <link rel="stylesheet" href="/assets/animations.css">
 
-        <title>Jarred Vardy {{ (" - " + title) if title else "" }}</title>
+        {% if titleOverride %}
+            <title>Jarred Vardy{{ " - " + titleOverride }}</title>
+        {% else %}
+            <title>Jarred Vardy{% block pageTitle %}{% endblock %}</title>
+        {% endif %}
     </head>
     <body>
         {% block body %}{% endblock %}
