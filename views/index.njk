@@ -30,10 +30,9 @@
     <ul id="posts"></ul>
 
     <ul style="list-style: none;">
-        <li style="margin-bottom: 10px;">One Post</li>
-        <li style="margin-bottom: 10px;">Two Post</li>
-        <li style="margin-bottom: 10px;">Red Post</li>
-        <li style="margin-bottom: 10px;">Blue Post</li>
+        {% for post in latestPosts %}
+            <li><a href={{ "/blog/" + post.slug }}>{{ post.title }} | {{ post.date }}</a></li>
+        {% endfor %}
     </ul>
 </div>
 <div class="section">

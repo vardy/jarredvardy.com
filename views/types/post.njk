@@ -9,28 +9,14 @@
 {% block body %}
     {% include "components/nav.njk" %}
     <div class="container">
-        {% block post %}{% endblock %}
+        <ul id="breadcrumbs">
+            <li class="breadcrumb-active"><a href="/">Home</a></li>
+            <li class="breadcrumb-active"><a href="/blog">Blog</a></li>
+            <li class="breadcrumb-inactive">{{ post.title }}</li>
+        </ul>
+
+        {% block postContent %}{% endblock %}
     </div>
 
-    <!--
-        Navbar script
-    -->
-    <script>
-        var scrollEventHandler = function() {
-            if(scrollY >= 105) {
-                if(!document.getElementById("heading-nav-scrolled")) {
-                    var head = document.getElementById("heading-nav");
-                    var clone = head.cloneNode(true);
-                    clone.id = "heading-nav-scrolled";
-                    clone.classList.add("slideDown");
-                    clone.classList.add("bottom-shadow");
-                    document.body.insertBefore(clone, head);
-                }
-            } else {
-                document.getElementById("heading-nav-scrolled").remove();
-            }
-        }
-
-        window.addEventListener("scroll", scrollEventHandler);
-    </script>
+    <script src="/assets/navbar.js"></script>
 {% endblock %}

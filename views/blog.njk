@@ -1,0 +1,9 @@
+{% extends "types/homepage.njk" %}
+
+{% block pageContents %}
+    <ul>
+    {% for post in allPosts %}
+        <li><a href={{ "/blog/" + post.slug }}>{{ post.title }} | {{ post.date }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

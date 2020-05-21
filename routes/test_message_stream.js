@@ -1,10 +1,12 @@
+const router = require('express').Router();
+
 const redis = require("redis");
 const config = require("../config");
 
 /**
- * Handling "/update-stream"
+ * Handling GET "/update-stream"
  */
-module.exports = (req, res) => {
+router.get("/", function(req, res){
     req.socket.setTimeout(2147483647); // Max possible socket delay
   
     let messageCount = 0;
@@ -36,4 +38,6 @@ module.exports = (req, res) => {
       subscriber.unsubscribe();
       subscriber.quit();
     });
-  };
+  });
+
+  module.exports = router;
