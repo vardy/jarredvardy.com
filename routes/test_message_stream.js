@@ -1,23 +1,22 @@
-const redis = require('redis');
+const redis = require("redis");
+const config = require("../config");
 
 /**
  * Handling "/update-stream"
  */
 module.exports = (req, res) => {
-    // let request last as long as possible
-    req.socket.setTimeout(2147483647); // Max possible delay
+    req.socket.setTimeout(2147483647); // Max possible socket delay
   
-    var messageCount = 0;
-    var subscriber = redis.createClient({host: process.env.REDIS_HOST});
+    let messageCount = 0;
+    const subscriber = redis.createClient({host: config.REDIS_HOST});
   
-    subscriber.subscribe("updates");
+    subscriber.subscribe(config.REDIS_PUBSUB_CHANNEL);
   
-    // In case we encounter an error...print it out to the console
     subscriber.on("error", function(err) {
       console.log("Redis Error: " + err);
     });
   
-    // When we receive a message from the redis connection
+    // New message on Redis pub/sub
     subscriber.on("message", function(channel, message) {
       messageCount++; // Increment our message count
   

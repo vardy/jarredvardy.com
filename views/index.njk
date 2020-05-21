@@ -1,0 +1,145 @@
+{% extends "types/primary.njk" %}
+
+{% block body %}
+<div id="heading-nav" class="aligner">
+    <nav id="nav-container">
+    <div id="nav-brand">
+        <a href="/">
+        <img id="brand-logo" loading="lazy" alt="Site logo" src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/237/surfer_1f3c4.png">
+        <span id="brand-text">Jarred Vardy</span>
+        </a>
+    </div>
+    <ul id="nav-items">
+        <li class="nav-item"><a href="#">Contact</a></li>
+        <li class="nav-item"><a href="#">Portfolio</a></li>
+        <li class="nav-item"><a href="#">Blog</a></li>
+    </ul>
+    </nav>
+</div>
+<!-- All content centered on page -->
+<div class="container">
+    <div id="jumbotron" class="section">
+        <div id="jumbotron-message" class="jumbotron-item">
+        <h1>Please hire me</h1>
+        <p>
+            I'm not desperate I swear... Morbi lacinia tincidunt tristique. Donec eu neque sapien. Sed non urna felis. Curabitur eleifend mi suscipit, scelerisque massa vitae, semper tortor. Sed sed lectus quis arcu ultrices vestibulum non vitae justo.
+        </p>
+        <a href="https://github.com/vardy/">
+            <img id="shield-github" alt="GitHub Link" src="https://img.shields.io/github/followers/vardy?label=Github&logo=github&logoColor=white&style=flat-square">
+        </a>
+        </div>
+        <div id="pfp-container" class="jumbotron-item">
+        <div id="pfp-box">
+            <img id="pfp" alt="Myself, eating a carrot" src="https://cdn.vardy.dev/f/2yJ3E4.jpeg">
+            <h2>Hi, I'm Jarred</h2>
+            <p id="pfp-flavour">
+            Marine scientist, activist, programmer, and garden hose specialist.
+            </p>
+        </div>
+        </div>
+    </div>
+
+    <div class="section">
+    <h2>Latest Posts</h2>
+
+    <ul id="posts"></ul>
+
+    <ul style="list-style: none;">
+        <li style="margin-bottom: 10px;">One Post</li>
+        <li style="margin-bottom: 10px;">Two Post</li>
+        <li style="margin-bottom: 10px;">Red Post</li>
+        <li style="margin-bottom: 10px;">Blue Post</li>
+    </ul>
+    </div>
+    <div class="section">
+    <h2>Portfolio</h2>
+
+    <p>
+        orbi lacinia tincidunt tristique. Donec eu neque sapien. Sed non urna felis. Curabitur eleifend mi suscipit, scelerisque massa vitae, semper tortor. Sed sed lectus quis arcu ultrices vestibulum non vitae justo.
+    </p>
+    </div>
+    <div class="section">
+    <h2>Events</h2>
+
+    <button onclick="newAuthor()">Click here!!</button>
+    <ul id="authors"></ul>
+
+    <ul id="events"></ul>
+    </div>
+    <div class="section">
+    <h2>Authors</h2>
+
+    {% include "lipsum.njk" %}
+    </div>
+    <div class="section">
+    <p>Some centered text for some reason</p>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="/assets/test.js"></script>
+
+<!--
+    Event listener
+-->
+<script>
+    let source = new EventSource('/update-stream');
+
+    let eventList = document.getElementById("events");
+
+    source.addEventListener('message', function(event) {
+        console.log(event);
+        let item = document.createElement("li");
+        let text = document.createElement("span");
+        text.innerHTML = `${event.lastEventId}: ${event.data}`
+        item.appendChild(text);
+        eventList.appendChild(item);
+    }, false);
+</script>
+
+<!--
+    Blogposts script
+-->
+<script>
+    let source = new EventSource('/update-stream');
+
+    let eventList = document.getElementById("events");
+
+    source.addEventListener('message', function(event) {
+        console.log(event);
+        let item = document.createElement("li");
+        let text = document.createElement("span");
+        text.innerHTML = `${event.lastEventId}: ${event.data}: <%- some_data %>`
+        item.appendChild(text);
+        eventList.appendChild(item);
+    }, false);
+</script>
+
+<!--
+    Navbar script
+-->>
+<script>
+    var scrollEventHandler = function() {
+        if(scrollY >= 105) {
+            if(!document.getElementById("heading-nav-scrolled")) {
+                var head = document.getElementById("heading-nav");
+                var clone = head.cloneNode(true);
+                clone.id = "heading-nav-scrolled";
+                clone.classList.add("slideDown");
+                clone.classList.add("bottom-shadow");
+                document.body.insertBefore(clone, head);
+            }
+        } else {
+            document.getElementById("heading-nav-scrolled").remove();
+        }
+    }
+
+    window.addEventListener("scroll", scrollEventHandler);
+</script>
+
+<!-- Bottom-right stripes for pazzaz -->
+<div id="stripe-1"></div>
+<div id="stripe-2"></div>
+<div id="stripe-3"></div>
+<div id="stripe-4"></div>
+{% endblock %}

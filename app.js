@@ -1,4 +1,5 @@
 const express = require("express");
+const nunjucks = require("nunjucks");
 const app = express();
 
 const marked = require("marked");
@@ -6,6 +7,8 @@ const marked = require("marked");
 const rimraf = require("rimraf");
 const fs = require("fs");
 const path = require("path");
+
+const config = require("./config");
 
 
 // Post parser (syncronous)
@@ -50,9 +53,15 @@ function parsePosts() {
 
 parsePosts();
 
+// HTML templating
+nunjucks.configure(['./views'], {
+    autoescape: true,
+    express: app
+});
+
 // Middleware
-app.set("port", 3000);
-app.set("view engine", "ejs");
+app.set("port", config.PORT || 3000);
+app.set("view engine", "nunjucks");
 
 // Static routes for assets
 app.use("/assets", express.static("./public"));
@@ -67,6 +76,6 @@ app.listen(app.get("port"), () => {
     console.log(`App listening on port ${app.get("port")}...`);
     process.send && process.send({ 
         event: 'online', 
-        url: 'http://localhost:3000/' 
+        url: `${config.HOST}:${app.get("port")}/` 
     });
 });

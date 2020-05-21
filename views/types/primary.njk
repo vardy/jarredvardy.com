@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <base href="/">
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta
+            name="Jarred Vardy"
+            content="Portfolio and Blog of Jarred Vardy"
+        />
+
+        <link rel="icon" href="/assets/favicon.ico" />
+
+        <link rel="stylesheet" href="/assets/style.css">
+        <link rel="stylesheet" href="/assets/animations.css">
+
+        <title>Jarred Vardy {{ (" - " + title) if title else "" }}</title>
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        <script src={{ browserRefreshURL }}></script>
+    </body>
+</html>
