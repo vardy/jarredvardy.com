@@ -10,10 +10,6 @@ services:
     networks: 
      - web
      - backend
-    volumes: 
-     - blog-posts:/app/posts
-    ports: 
-     - "3000:3000"
     labels: 
      - "traefik.enable=true"
      - "traefik.http.routers.homesite-web.rule=Host(`vardy.dev`) || Host(`www.vardy.dev`)"
@@ -28,9 +24,6 @@ services:
     image: redis
     networks: 
      - backend
-
-volumes: 
-  blog-posts:
 
 networks: 
   web:
