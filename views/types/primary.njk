@@ -15,6 +15,9 @@
         <link rel="stylesheet" href="/assets/style.css">
         <link rel="stylesheet" href="/assets/animations.css">
 
+        {% block head %}
+        {% endblock %}
+
         {% if titleOverride %}
             <title>Jarred Vardy{{ " - " + titleOverride }}</title>
         {% else %}
@@ -24,5 +27,11 @@
     <body>
         {% block body %}{% endblock %}
         <script src={{ browserRefreshURL }}></script>
+
+        <!-- Bottom-right stripes for pazzaz -->
+        <div id="stripe-1"></div>
+        <div id="stripe-2"></div>
+        <div id="stripe-3"></div>
+        <div id="stripe-4"></div>
     </body>
 </html>

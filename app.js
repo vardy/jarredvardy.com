@@ -3,6 +3,7 @@ const nunjucks = require("nunjucks");
 const app = express();
 
 const marked = require("marked");
+const highlighter = require("highlight.js");
 
 const rimraf = require("rimraf");
 const fs = require("fs");
@@ -10,6 +11,15 @@ const path = require("path");
 
 const config = require("./config");
 
+
+marked.setOptions({
+    highlight: function(code, language) {
+        const validatedLanguage = highlighter.getLanguage(language) ? language : 'plaintext';
+        return highlighter.highlight(validatedLanguage, code).value;
+    }
+});
+
+let blogPosts = {}
 
 // Post parser (syncronous)
 // Transpiles posts in /posts/ from markdown to HTML.
@@ -20,7 +30,7 @@ function parsePosts() {
         fs.mkdirSync(mdPostsPath);
     }
 
-    let htmlPostsPath = __dirname + "/public/posts"
+    let htmlPostsPath = __dirname + "/views/posts"
     if (fs.existsSync(htmlPostsPath)){
         rimraf.sync(htmlPostsPath);
         fs.mkdirSync(htmlPostsPath);
@@ -36,11 +46,16 @@ function parsePosts() {
             const mdFilePath = path.join(mdPostsPath, file);
 
             const fileNameSansExt = path.parse(file).name;
-            const newFileName = fileNameSansExt + ".html";
+            const newFileName = fileNameSansExt + ".njk";
             const desination = path.join(htmlPostsPath, newFileName);
 
             const mdFileContents = fs.readFileSync(mdFilePath, 'utf8');
-            const htmlContent = marked(mdFileContents);
+            let htmlContent = marked(mdFileContents);
+            htmlContent = 
+                "{% extends \"types/post.njk\" %}\n" + 
+                "{% block post %}" + 
+                htmlContent + 
+                "\n{% endblock %}";
             fs.writeFileSync(desination, htmlContent);
 
             console.log("Transpiled post '%s'->'%s'", mdFilePath, desination);
@@ -70,6 +85,7 @@ app.use("/assets", express.static("./public"));
 app.use("/update-stream", require("./routes/test_message_stream"));
 app.use("/fire-event/:event_name", require("./routes/fire-event"));
 
+app.use("/posts/:post", require("./routes/posts"));
 app.use("/", require("./routes/index"));
 
 app.listen(app.get("port"), () => {
