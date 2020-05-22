@@ -84,12 +84,19 @@ module.exports.initPosts = function parsePosts() {
 }
 
 module.exports.getLatestPosts = function getLatestPosts(quantity) {
-    return this.getOrderedPosts().slice(-quantity);
+    return this.getOrderedPosts().reverse().slice(-quantity).reverse();
 }
 
 module.exports.getOrderedPosts = function getOrderedPosts() {
     let posts = blogPosts.slice();
-    posts.sort((a, b) => new Date(a.date) - new Date(b.date));
+    let sorter = (a, b) => {
+        if(a.date != b.date) {
+            return new Date(a.date) - new Date(b.date);
+        } else {
+            return a.title < b.title ? 1 : -1;
+        }
+    }
+    posts.sort(sorter).reverse();
     return posts;
 }
 

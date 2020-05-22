@@ -1,10 +1,10 @@
 {
     "title": "Test One",
     "slug": "test_one",
-    "date": "2020-05-21",
+    "date": "2020-06-02",
     "description": "This post attempts to teach X Y Z",
     "tags": ["tutorial", "javascript"],
-    "icon": "https://cdn.example.com/abc123.png",
+    "icon": "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/237/fire_1f525.png",
     "preamble": "Italicised text at top, under title"
 }
 

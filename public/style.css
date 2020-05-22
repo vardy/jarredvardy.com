@@ -50,6 +50,10 @@ p {
     color: rgb(0, 0, 0, 0.6)
 }
 
+a {
+    text-decoration: none;
+}
+
 .container {
     max-width: 700px;
     margin-left: auto;
@@ -95,6 +99,41 @@ p {
 
 #stripe-4 {
     background-color: #BDF6E9;
+}
+
+#portfolio-section:last-child {
+    border-bottom: 0px;
+}
+
+.portfolio-item {
+    padding-bottom: 0.4rem;
+    padding-top: 0.4rem;
+    padding-left: 0.7rem;
+    color: rgb(0, 0, 0, 0.9);
+    border-bottom: 0.5px solid rgb(0, 0, 0, 0.25);
+    display: flex;
+}
+
+.portfolio-item-icon {
+    height: 30px;
+    width: 30px;
+    display: inline;
+    margin-top: 12px;
+    margin-right: 20px;
+}
+
+.portfolio-item:hover {
+    border-radius: 6px;
+    background-color: rgba(117, 90, 90, 0.05);
+}
+
+.portfolio-item h3 {
+    font-size: 1.15rem;
+    display: inline;
+}
+
+.no-border {
+    border-bottom: 0px;
 }
 
 /*

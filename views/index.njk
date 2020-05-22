@@ -24,17 +24,18 @@
     </div>
 </div>
 
-<div class="section">
+<div id="portfolio-section" class="section">
     <h2>Latest Posts</h2>
-
-    <ul id="posts"></ul>
-
-    <ul style="list-style: none;">
-        {% for post in latestPosts %}
-            <li><a href={{ "/blog/" + post.slug }}>{{ post.title }} | {{ post.date }}</a></li>
-        {% endfor %}
-    </ul>
+    {% for post in latestPosts %}
+        <a href={{ "/blog/" + post.slug }}>
+            <div class="portfolio-item">
+                <img class="portfolio-item-icon" src={{ "" + post.icon }}>
+                <h3>{{ post.title }} | {{ post.date }}</h3>
+            </div>
+        </a>
+    {% endfor %}
 </div>
+
 <div class="section">
     <h2>Portfolio</h2>
     {% include "components/lipsumP1.njk" %}
@@ -61,6 +62,12 @@
     Author script
 -->
 <script src="/assets/test.js"></script>
+
+<!-- Adjust portfolio item style -->
+<script>
+    let folioItems = document.getElementsByClassName("portfolio-item");
+    folioItems[folioItems.length - 1].classList.add("no-border");
+</script>
 
 <!--
     Event listener

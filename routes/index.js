@@ -9,7 +9,7 @@ const postsUtil = require("../utils/posts");
 router.get("/", function(req, res) {
     res.render('index.njk', {
         titleOverride: "",
-        latestPosts: postsUtil.getLatestPosts(10),
+        latestPosts: postsUtil.getLatestPosts(5),
         browserRefreshURL: config.BROWSER_REFRESH_URL
     });
 });
